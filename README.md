@@ -1,6 +1,6 @@
 # Clone Stick AI
 
-![Clone Stick AI](https://your-image-url-here.png)
+![Clone Stick AI](https://github.com/Code-With-Rudy/Clone-Stick-Ai/blob/main/Clone%20Stick.png)
 
 ## About
 
