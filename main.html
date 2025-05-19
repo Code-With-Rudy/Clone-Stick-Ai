@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clone Stick AI - Motion Mirroring Technology</title>
+    <style>
+        :root {
+            --primary: #0078D7;
+            --secondary: #255, 0, 128;
+            --dark: #121212;
+            --light: #f5f5f5;
+            --accent: #00c2ff;
+            --gradient: linear-gradient(135deg, #0078D7, #255, 0, 128, #00c2ff);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--light);
+            transition: 0.3s;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), #ff00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(0, 120, 215, 0.2);
+            filter: blur(80px);
+            z-index: -1;
+            animation: pulse 6s infinite alternate;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 120, 215, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 120, 215, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            flex: 1;
+            min-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .requirements {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 0;
+        }
+        
+        .requirements ul {
+            list-style-type: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .requirements li {
+            margin-bottom: 1rem;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .requirements li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .download {
+            background: radial-gradient(circle at top right, rgba(0, 120, 215, 0.2), transparent);
+            text-align: center;
+        }
+        
+        .download-box {
+            background: rgba(255, 255, 255, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem;
+            border-radius: 20px;
+            line-height: 1.8;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .demo-section {
+            text-align: center;
+        }
+        
+        .demo-video {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .demo-placeholder {
+            background: rgba(255, 255, 255, 0.05);
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .creator {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .creator-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .creator-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 50%;
+            border: 5px solid var(--primary);
+        }
+        
+        .creator-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .creator-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 550px;
+            height: 35px;
+            border-radius: 60%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            opacity: 0.7;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(18, 18, 18, 0.95);
+                padding: 1rem 0;
+                gap: 0;
+                transform: translateY(-200%);
+                transition: transform 0.3s;
+                backdrop-filter: blur(10px);
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .nav-links a {
+                padding: 1rem 2rem;
+                width: 100%;
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .hero-text, .hero-image {
+                text-align: center;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-card {
+                min-width: 100%;
+            }
+            
+            .creator {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <span>Clone Stick AI</span>
+                </div>
+                <div class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-links" id="navLinks">
+                    <a href="#features">Features</a>
+                    <a href="#requirements">Requirements</a>
+                    <a href="#download">Download</a>
+                    <a href="#demo">Demo</a>
+                    <a href="#creator">Creator</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Motion Clone Technology</h1>
+                    <p>Experience the future of motion tracking and real-time visual effects with Clone Stick AI. Create stunning visualizations of your movements with advanced AI-powered pose estimation.</p>
+                    <a href="#download" class="btn">Download Now</a>
+                    <a href="#demo" class="btn btn-outline">Watch Demo</a>
+                </div>
+                <div class="hero-image">
+                    <img src="Clone Stick.png" alt="Clone Stick AI in action">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Amazing Features</h2>
+                <p>Clone Stick AI comes with powerful features to transform how you visualize movement</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Pose Detection</h3>
+                    <p>Powered by MediaPipe technology, the app accurately detects your body movements in real-time with advanced AI algorithms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Visual Effects</h3>
+                    <p>Choose from multiple stunning visual effects including glow, neon, and rainbow to create captivating visuals of your movements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Real-time Mirroring</h3>
+                    <p>See your movements mirrored and enhanced with eye-catching visual effects that respond instantly to your actions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>3D Visualization</h3>
+                    <p>View your movements in a 3D space with the integrated visualization panel that shows your pose from multiple perspectives.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Customizable UI</h3>
+                    <p>Adjust colors, effects, quality settings, and camera sources to personalize your experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>Fullscreen Mode</h3>
+                    <p>Enjoy an immersive experience with fullscreen mode, perfect for performances or demonstrations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="requirements" class="requirements">
+        <div class="container">
+            <div class="section-title">
+                <h2>System Requirements</h2>
+                <p>Make sure your system meets the following requirements before downloading</p>
+            </div>
+            <ul>
+                <li><strong>Operating System:</strong> Windows 10 or later (64-bit)</li>
+                <li><strong>Processor:</strong> Intel Core i5 or equivalent (quad-core recommended)</li>
+                <li><strong>Memory:</strong> 8GB RAM minimum (16GB recommended)</li>
+                <li><strong>Graphics:</strong> Dedicated GPU recommended for better performance</li>
+                <li><strong>Camera:</strong> Working webcam (internal or external)</li>
+                <li><strong>Software Dependencies:</strong> The executable includes all required libraries (cv2, mediapipe, numpy, matplotlib, etc.)</li>
+                <li><strong>Screen Resolution:</strong> 1280x720 or higher</li>
+                <li><strong>Internet:</strong> Not required after installation</li>
+                <li><strong>Storage:</strong> At least 500MB of free disk space</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="download" class="download">
+        <div class="container">
+            <div class="section-title">
+                <h2>Download Clone Stick AI</h2>
+                <p>Get started with Clone Stick AI and transform your movements into digital art</p>
+            </div>
+            <div class="download-box">
+                <h2>Clone Stick AI v1.0</h2>
+                <p>Latest release with all features including </p>
+                <p>real-time motion tracking, visual effects, and 3D visualization.</p>
+                <p>Size: 450.2 MB</p>
+                <p>The Rar File is Password Protected:</p>
+                <p>Watch the demo video to get the Password.</p>
+            
+                <a href="https://drive.google.com/file/d/1xdYkZkYC29ibYqkhUjWE-8IPiVrp8k40/" class="btn">Download for Windows (64-bit)</a>
+                <p style="margin-top: 20px; opacity: 0.7;">By downloading, you agree to our Terms of Service and Privacy Policy</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>See It In Action</h2>
+                <p>Watch Clone Stick AI transform ordinary movements into extraordinary visuals</p>
+            </div>
+            <div class="demo-video">
+                <div class="demo-placeholder">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/1OOJyex5co8?si=-83AjhTnCUBa2kmb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                 
+                </div>
+            </div>
+            <p>The video above demonstrates the core features of Clone Stick AI, including real-time motion tracking, visual effects, and the mirroring capabilities that make this app unique.</p>
+        </div>
+    </section>
+
+    <section id="creator">
+        <div class="container">
+            <div class="section-title">
+                <h2>About the Creator</h2>
+                <p>Meet the mind behind Clone Stick AI</p>
+            </div>
+            <div class="creator">
+                <div class="creator-image">
+                    <img src="rudranil.jpg" alt="Rudranil - Creator of Clone Stick AI">
+                </div>
+                <div class="creator-info">
+                    <h3>Rudranil Goswami</h3>
+                    <p>Rudranil is a passionate developer with expertise in AI, computer vision, and interactive applications. With a background in software engineering and a love for creative technology, Rudranil created Clone Stick AI to make motion tracking technology accessible and fun for everyone.</p>
+                    <p>Clone Stick AI represents the culmination of research and development in pose estimation and real-time visual effects, showcasing the potential of AI in creative applications.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/Code-With-Rudy" title="GitHub"><i>Github</i></a>
+                        <a href="https://in.linkedin.com/in/rudranil-goswami-a94298329" title="LinkedIn"><i>IN</i></a>
+                        <a href="https://www.instagram.com/rudranil.exe" title="Instagram"><i>Insta</i></a>
+                        <a href="https://www.youtube.com/channel/UC3ziDcZyyZSGF4L6U5faWxQ/" title="Email"><i>Youtube</i></a>
+                        <a href="https://www.facebook.com/VDJRudyOfficial" title="FaceBook"><i>FB</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="#">Support</a>
+            </div>
+            <p class="copyright">© 2025 Clone Stick AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
